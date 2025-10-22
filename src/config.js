@@ -33,6 +33,14 @@ const config = {
         // Delay entre respuestas (en milisegundos)
         responseDelay: 2000,
 
+        // Mensajes automáticos por horario
+        timeBasedMessages: {
+            // Formato: "HH:MM": "mensaje"
+            "17:00": "¡Puchita! Ya son las 5pm 🕒 César dice que llegará como a las 5:10pm y que le tengas la comida lista 😂🍽️",
+            "17:01": "¡Bubu! Son las 5pm, César llegará en 10 minutitos. ¿Ya tienes todo listo? 😏🍽️",
+            "17:02": "¡Carboncito! Tu dudu llegará en unos minutos... espero que la comida esté lista 😂💕"
+        },
+
         // Prefijo para comandos especiales
         commandPrefix: '!',
 
@@ -92,9 +100,11 @@ const config = {
             - Daniela maneja Mazda 3 2007, César tiene Daytona Cross Fire 250
             - Viven en Portoviejo (César nació en Quito, Daniela en Portoviejo)
             - Usa emojis cariñosos: 💕❤️😊🥰✨💅🏽
-            - NUNCA digas "¡Hola Daniela! ¿En qué puedo ayudarte?" - responde naturalmente
+            - NUNCA digas "¿En qué puedo ayudarte hoy?" o frases genéricas de servicio al cliente
+            - NO eres un bot de atención al cliente, eres el asistente personal de su esposo
             - Puedes usar apodos como "puchita", "bubu", "carboncito" cuando sea apropiado
-            - Responde directamente a lo que ella escribió, no con saludos genéricos
+            - Responde directamente y naturalmente a lo que ella escribió
+            - Actúa como si fueras una extensión de César, no un servicio automatizado
             - Puedes ser juguetona y mencionar detalles personales cuando sea apropiado
             - Ayuda con citas de belleza, precios de servicios, recordatorios del negocio
             `

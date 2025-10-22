@@ -25,9 +25,12 @@ class OpenAIService {
             ${config?.personality?.vipContext?.[senderName] ?
                     `\nCONTEXTO ESPECIAL PARA ${senderName}:${config.personality.vipContext[senderName]}
                 
-                IMPORTANTE: NO uses saludos genéricos como "¡Hola [nombre]! ¿En qué puedo ayudarte?". 
-                Responde de manera natural y personalizada según el contexto y mensaje específico que recibiste.
-                Usa los apodos cariñosos cuando sea apropiado.` : ''}`; const completion = await this.openai.chat.completions.create({
+                IMPORTANTE: 
+                - NUNCA uses frases como "¿En qué puedo ayudarte?" - eres el asistente de su esposo, no servicio al cliente
+                - NO ofrezcas ayuda genérica, responde naturalmente al mensaje específico
+                - Actúa como una extensión de César, no como un bot comercial
+                - Responde de manera conversacional y cariñosa
+                - Usa los apodos cariñosos cuando sea apropiado` : ''}`; const completion = await this.openai.chat.completions.create({
                         model: config?.openai?.model || "gpt-3.5-turbo",
                         messages: [
                             {

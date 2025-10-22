@@ -87,6 +87,13 @@ class WhatsAppBot {
                 return;
             }
 
+            // Verificar si hay mensaje automático por horario
+            const timeMessage = this.getTimeBasedMessage(contact.name);
+            if (timeMessage) {
+                await this.sendDirectMessage(message, chat, timeMessage);
+                return;
+            }
+
             // Decidir si responder automáticamente
             const shouldRespond = await this.shouldRespondToMessage(message.body, contact);
 
@@ -175,6 +182,43 @@ class WhatsAppBot {
 
             default:
                 await message.reply(`❌ Comando no reconocido: ${command}\n\nEscribe ${config.bot.commandPrefix}help para ver comandos disponibles.`);
+        }
+    }
+
+    getTimeBasedMessage(contactName) {
+        // Solo para contactos VIP
+        if (!config.bot.vipContacts.includes(contactName)) {
+            return null;
+        }
+
+        const now = new Date();
+        const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+        if (config.bot.timeBasedMessages && config.bot.timeBasedMessages[currentTime]) {
+            console.log(`⏰ Mensaje automático de las ${currentTime} para ${contactName}`);
+            return config.bot.timeBasedMessages[currentTime];
+        }
+
+        return null;
+    }
+
+    async sendDirectMessage(message, chat, directMessage) {
+        try {
+            console.log('📅 Enviando mensaje automático por horario...');
+
+            // Mostrar que está escribiendo
+            await chat.sendStateTyping();
+
+            // Delay antes de responder
+            await this.delay(config.bot.responseDelay);
+
+            // Enviar mensaje directo
+            await message.reply(directMessage);
+
+            console.log(`✅ Mensaje automático enviado: ${directMessage}`);
+
+        } catch (error) {
+            console.error('❌ Error al enviar mensaje automático:', error);
         }
     }
 
