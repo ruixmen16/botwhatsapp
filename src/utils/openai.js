@@ -10,27 +10,25 @@ class OpenAIService {
     async generateResponse(message, senderName = 'Usuario', context = '', config = null) {
         try {
             // Construir prompt personalizado
-            let systemPrompt = `Eres ${config?.personality?.name || 'un asistente virtual'} amigable y útil que responde mensajes de WhatsApp.
+            let systemPrompt = `${config?.personality?.role || 'Eres una persona real respondiendo mensajes de WhatsApp'}
             
-            ${config?.personality?.role || ''}
-            
-            CONTEXTO SOBRE TI:
+            INFORMACIÓN SOBRE TI:
             ${config?.personality?.context || ''}
             
-            INSTRUCCIONES DE COMPORTAMIENTO:
-            ${config?.personality?.instructions || '- Sé conciso y directo\n- Sé amigable y profesional'}
+            CÓMO DEBES RESPONDER:
+            ${config?.personality?.instructions || '- Responde naturalmente'}
             
             ${context ? `\nCONTEXTO ADICIONAL: ${context}` : ''}
             
             ${config?.personality?.vipContext?.[senderName] ?
-                    `\nCONTEXTO ESPECIAL PARA ${senderName}:${config.personality.vipContext[senderName]}
+                    `\nINFORMACIÓN ESPECÍFICA SOBRE ESTA CONVERSACIÓN:${config.personality.vipContext[senderName]}
                 
-                IMPORTANTE: 
-                - NUNCA uses frases como "¿En qué puedo ayudarte?" - eres el asistente de su esposo, no servicio al cliente
-                - NO ofrezcas ayuda genérica, responde naturalmente al mensaje específico
-                - Actúa como una extensión de César, no como un bot comercial
-                - Responde de manera conversacional y cariñosa
-                - Usa los apodos cariñosos cuando sea apropiado` : ''}`; const completion = await this.openai.chat.completions.create({
+                REGLAS CRÍTICAS: 
+                - Responde exactamente como ${config?.personality?.name} respondería a su esposa
+                - NUNCA menciones que eres un bot, IA o asistente
+                - Habla en primera persona como si fueras realmente ${config?.personality?.name}
+                - Responde de manera completamente natural y espontánea
+                - NO uses lenguaje artificial o de servicio al cliente` : ''}`; const completion = await this.openai.chat.completions.create({
                         model: config?.openai?.model || "gpt-3.5-turbo",
                         messages: [
                             {
@@ -39,7 +37,7 @@ class OpenAIService {
                             },
                             {
                                 role: "user",
-                                content: `${senderName} dice: ${message}`
+                                content: message
                             }
                         ],
                         max_tokens: config?.openai?.maxTokens || 150,
