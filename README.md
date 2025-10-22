@@ -22,10 +22,10 @@ Bot automatizado de WhatsApp que utiliza inteligencia artificial (OpenAI GPT-3.5
 
 ### Pasos de instalación
 
-1. **Clona o descarga el proyecto**
+1. **Clona el proyecto desde GitHub**
    ```bash
-   git clone <tu-repo>
-   cd whatsapp-ai-bot
+   git clone https://github.com/tu-usuario/botwhatsapp.git
+   cd botwhatsapp
    ```
 
 2. **Instala las dependencias**
