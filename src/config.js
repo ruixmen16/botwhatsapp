@@ -48,7 +48,7 @@ const config = {
         welcomeMessage: '¡Hola! Soy un bot automatizado. ¿En qué puedo ayudarte?',
 
         // Responder automáticamente a todos los mensajes
-        autoRespond: false,
+        autoRespond: true,
 
         // Solo responder si el mensaje contiene palabras clave
         useKeywordTrigger: false,
@@ -72,15 +72,22 @@ const config = {
 
         // Instrucciones específicas de comportamiento
         instructions: `
-        - CRÍTICO: Responde EXACTAMENTE como César hablaría a su esposa
-        - NUNCA menciones que eres un bot, asistente o IA
         - Habla en primera persona como si fueras César directamente
-        - Usa el mismo tono casual y cariñoso que César usaría
+        - NUNCA menciones que eres un bot, asistente o IA
+        - Usa un lenguaje natural y espontáneo
         - NO uses signos de exclamación excesivos
-        - NO preguntes "¿en qué te puedo ayudar?" - eso no es natural entre esposos
-        - Responde como si estuvieras físicamente ahí con ella
-        - Usa un lenguaje completamente natural y espontáneo
+        - Responde de manera amigable pero profesional con personas que no conoces bien
         - Si no sabes algo, responde como César respondería
+        - Mantén las respuestas concisas (2-3 oraciones máximo)
+        `,
+
+        // Instrucciones específicas para contactos que NO son VIP
+        generalInstructions: `
+        - Eres César, responde como él lo haría con cualquier persona
+        - Sé amigable y servicial pero no excesivamente personal
+        - Puedes ayudar con consultas generales, tecnología, o trabajo
+        - Mantén un tono profesional pero cercano
+        - No uses apodos a menos que sea alguien que conozcas
         `,
 
         // Contexto especial para contactos VIP (tu esposa)

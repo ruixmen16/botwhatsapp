@@ -18,31 +18,39 @@ class OpenAIService {
             CÓMO DEBES RESPONDER:
             ${config?.personality?.instructions || '- Responde naturalmente'}
             
-            ${context ? `\nCONTEXTO ADICIONAL: ${context}` : ''}
+            ${context ? `\nCONTEXTO DE LA CONVERSACIÓN: ${context}` : ''}
             
             ${config?.personality?.vipContext?.[senderName] ?
-                    `\nINFORMACIÓN ESPECÍFICA SOBRE ESTA CONVERSACIÓN:${config.personality.vipContext[senderName]}
+                    `\nINFORMACIÓN ESPECÍFICA - CONTACTO VIP (${senderName}):${config.personality.vipContext[senderName]}
                 
-                REGLAS CRÍTICAS: 
+                REGLAS PARA CONTACTO VIP: 
                 - Responde exactamente como ${config?.personality?.name} respondería a su esposa
-                - NUNCA menciones que eres un bot, IA o asistente
-                - Habla en primera persona como si fueras realmente ${config?.personality?.name}
-                - Responde de manera completamente natural y espontánea
-                - NO uses lenguaje artificial o de servicio al cliente` : ''}`; const completion = await this.openai.chat.completions.create({
-                        model: config?.openai?.model || "gpt-3.5-turbo",
-                        messages: [
-                            {
-                                role: "system",
-                                content: systemPrompt
-                            },
-                            {
-                                role: "user",
-                                content: message
-                            }
-                        ],
-                        max_tokens: config?.openai?.maxTokens || 150,
-                        temperature: config?.openai?.temperature || 0.7,
-                    });
+                - Sé cariñoso, personal y usa apodos
+                - Habla como si estuvieras físicamente con ella
+                - Puedes hacer referencias familiares y personales` :
+                    `\nINFORMACIÓN PARA CONTACTO GENERAL:
+                ${config?.personality?.generalInstructions || ''}
+                
+                REGLAS PARA CONTACTO GENERAL:
+                - Responde como ${config?.personality?.name} lo haría con cualquier persona
+                - Sé amigable pero no excesivamente personal
+                - Mantén un tono profesional pero cercano`}`;
+
+            const completion = await this.openai.chat.completions.create({
+                model: config?.openai?.model || "gpt-3.5-turbo",
+                messages: [
+                    {
+                        role: "system",
+                        content: systemPrompt
+                    },
+                    {
+                        role: "user",
+                        content: message
+                    }
+                ],
+                max_tokens: config?.openai?.maxTokens || 150,
+                temperature: config?.openai?.temperature || 0.7,
+            });
 
             return completion.choices[0].message.content.trim();
         } catch (error) {
